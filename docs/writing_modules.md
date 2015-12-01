@@ -23,7 +23,23 @@ module.exports =
 
 ```
 
-Typically many modules will make up a complete templates. Each module exports an object with the following properties:
+Typically, a module will contain entities from [The AWS Template Reference](http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-template-resource-type-ref.html). The whole object is merged with the template, hence the need for the `Resources:` key. Other types can be included also, for instance [AWS Template Parameters](http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/parameters-section-structure.html):
+
+```coffeescript
+module.exports = 
+  Parameters: 
+    InstanceTypeParameter:
+      Type: 'String'
+      Default: 't1.micro'
+      AllowedValues: [
+        't1.micro'
+        'm1.small'
+        'm1.large'
+      ]
+      Description: 'Enter t1.micro, m1.small, or m1.large. Default is t1.micro.'
+```
+
+Usually, many modules will make up a complete template. Each module exports an object with the following properties:
 
 | Name            | Description                                                    |
 |:----------------|:---------------------------------------------------------------|
