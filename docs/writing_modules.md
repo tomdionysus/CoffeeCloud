@@ -2,7 +2,7 @@
 
 ## Modules
 
-`.coffee` modules in the `clouadformation` directory and subdirectories are the basic unit for building templates, e.g.:
+`.coffee` modules in the `cloudformation` directory and subdirectories are the basic unit for building templates, e.g.:
 
 ```coffeescript
 module.exports =
