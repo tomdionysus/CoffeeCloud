@@ -1,10 +1,8 @@
 # CoffeeCloud
 
-CoffeeCloud allows you to write [AWS CloudFormation]() templates with [Coffeescript](http://coffeescript.org).
+CoffeeCloud allows you to write [AWS CloudFormation](https://aws.amazon.com/cloudformation) templates with [Coffeescript](http://coffeescript.org).
 
 **Why would I want to do that?**
-
-In short:
 
 * CoffeeScript syntax for objects is less likely to melt your brain.
 * Dynamic templates, for a single AWS topology with multiple environments (DEV, UAT, PROD) where the config changes depending on environment.
@@ -16,7 +14,7 @@ Requires `coffee-script` and `nodejs`.
 
 ### Linux (Ubuntu)
 
-	apt-get install nodejs
+	apt-get install nodejs npm
 	npm install -g coffee-script
 	npm install
 
@@ -30,7 +28,10 @@ Requires `coffee-script` and `nodejs`.
 
 ### Examples
 
-The repository comes with example config in `cloudformation` and `environments`. Please delete the contents of these folders for a clean project.
+The repository comes with an example project `Test VPN` in the `cloudformation` and `environments` directories. Please delete the contents of these folders for a clean project:
+
+	rm -rf cloudformation/*
+	rm -rf environments/*
 
 ### Building Templates
 
@@ -38,7 +39,7 @@ The repository comes with example config in `cloudformation` and `environments`.
 
 	coffee compile.coffee
 
-Your CloudFormation `*.template` files will be build into the `build/` directory.
+Your CloudFormation `*.template` files will be built into the `build/` directory.
 
 The following steps are performed:
 
