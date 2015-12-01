@@ -47,11 +47,11 @@ Your CloudFormation `*.template` files will be built into the `build/` directory
 The following steps are performed:
 
 * All `.coffee` files in `./environments` are loaded, 
-* The environment params are `require`d from each file, and:
+* The environment params are loaded from each file using `require`, and:
 	* An environment template is initialized
 	* All `.coffee` files in `./cloudformation` are loaded:
 	* For each file:
-		* The file module is `require`d and `Cloudformation(environment_params)` is called
+		* The file module is loaded with `require` and `Cloudformation(environment_params)` is called
 		* The output is merged with the environment template
 	* The environment template is written to the `build/` directory.
 
