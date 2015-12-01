@@ -5,8 +5,9 @@ CoffeeCloud allows you to write [AWS CloudFormation](https://aws.amazon.com/clou
 **Why would I want to do that?**
 
 * CoffeeScript syntax for objects is less likely to melt your brain.
-* Dynamic templates, for a single AWS topology with multiple environments (DEV, UAT, PROD) where the config changes depending on environment.
-* Comments. Just do `# <comment_text>`, well, anywhere you like.
+* Multiple source files that build to one template means you can organise subsystems in directories, and easily reuse common components.
+* You can use dynamic templates, for a single AWS topology with multiple environments (DEV, UAT, PROD) where the config changes depending on environment.
+* You get to do comments. Just do `# <comment_text>`, well, anywhere you like.
 
 ## Installation
 
