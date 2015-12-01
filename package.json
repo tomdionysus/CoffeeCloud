@@ -1,0 +1,23 @@
+{
+  "name": "CoffeeCloud",
+  "description": "CoffeeScript CloudFormation Templates",
+  "author": "Tom Cully",
+  "version": "1.0.0",
+  "keywords": [
+    "coffee-script",
+    "aws",
+    "cloudformation",
+    "compiler"
+  ],
+  "github": "http://github.com/tomdionysus/CoffeeCloud",
+  "private": true,
+  "dependencies": {
+    "coffee-script" : "1.10.0",
+    "underscore": "1.8.3",
+    "deepmerge": "0.2.10"
+  },
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/tomdionysus/CoffeeCloud"
+  }
+}
