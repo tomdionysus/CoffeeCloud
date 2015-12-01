@@ -55,4 +55,17 @@ The following steps are performed:
 		* The output is merged with the environment template
 	* The environment template is written to the `build/` directory.
 
+## Hints and Tips
+
+* Convert AWS example snippets and existing AWS Cloudformation templates into Coffeescript using the excellent [js2.coffee](http://js2.coffee/).
+
+## Contributing
+
+Contributions, critique, bug notices and fixes are very welcome. Please use github issues / fork and submit a PR.
+
+## Code of Conduct
+
+The CoffeeCloud project is committed to the [Contributor Covenant](http://contributor-covenant.org). Please read [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) before making any contributions or comments.
+
+
 	
