@@ -27,6 +27,8 @@ Requires `coffee-script` and `nodejs`.
 
 ## Usage
 
+CoffeeCloud projects are build around coffeescript modules. Please see the [Writing Modules Guide](docs/writing_modules.md) for more.
+
 ### Examples
 
 The repository comes with an example project `Test VPN` in the `cloudformation` and `environments` directories. Please delete the contents of these folders for a clean project:
