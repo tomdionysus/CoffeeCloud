@@ -11,49 +11,104 @@ CoffeeCloud allows you to write [AWS CloudFormation](https://aws.amazon.com/clou
 
 ## Installation
 
-Requires `coffee-script` and `nodejs`.
+Requires `nodejs` and `coffee-script`.
 
 ### Linux (Ubuntu)
 
-	apt-get install nodejs npm
-	npm install -g coffee-script
-	npm install
+```bash
+apt-get install nodejs
+npm install -g coffee-script
+npm install && npm link
+```
 
 ### MacOSX (Homebrew)
 
-	brew install nodejs
-	npm install -g coffee-script
-	npm install
+```bash
+brew install nodejs
+npm install -g coffee-script
+npm install && npm link
+```
 
-## Usage
+## Building Templates
 
-CoffeeCloud projects are build around coffeescript modules. Please see the [Writing Modules Guide](docs/writing_modules.md) for more.
+`coffee-script` is used as a macro language to build environment templates. CD to the directory where your project is, and run:
 
-### Examples
+```bash
+  cd <projectdir>/
+  coffeecloud
+```
 
-The repository comes with an example project `Test VPN` in the `cloudformation` and `environments` directories. Please delete the contents of these folders for a clean project:
+### Environments
 
-	rm -rf cloudformation/*
-	rm -rf environments/*
+Each `.coffee` file in the `enviroments` directory represents an environment, **except** files which start with an underscore `_`. Each file represents one environment e.g. `environments/test.coffee`:
 
-### Building Templates
+```coffeescript
+module.exports = 
+  Name: 'Test DEV'
+  Description: 'Test CloudFormation Template for DEV Environment, AWS ap-southeast-2'
 
-`coffee-script` is used as a macro language to build environment templates. Run:
+  VPCCIDR: '10.0.0.0/16'
 
-	coffee compile.coffee
+  AvailibilityZones:  [ 'ap-southeast-2a',  'ap-southeast-2b' ]
 
-Your CloudFormation `*.template` files will be built into the `build/` directory.
+  WebTierCIDR:        [ '10.0.1.0/24',  '10.0.2.0/24' ]
+  ServicesTierCIDR:   [ '10.0.10.0/24', '10.0.11.0/24' ]
+  DataTierCIDR:       [ '10.0.20.0/24', '10.0.21.0/24' ]
+```
 
-The following steps are performed:
+An environment module **must** declare the `Name` property in order to be processed.
 
-* All `.coffee` files in `./environments` are loaded, 
-* The environment params are loaded from each file using `require`, and:
-	* An environment template is initialized
-	* All `.coffee` files in `./cloudformation` are loaded:
-	* For each file:
-		* The file module is loaded with `require` and `Cloudformation(environment_params)` is called
-		* The output is merged with the environment template
-	* The environment template is written to the `build/` directory.
+One CloudFormation `<envname>.template` will be build for each environment.
+
+### Environment Common Component(s)
+
+All files in `/enviroments` which start with an underscore are assumed to be common files, and are merged into a single environment object which is included in all other environments. You can define common CIDR/IP ranges, Ports or AMI IDs for all environments, e.g. `environments/_common.coffee`:
+
+```coffeescript
+module.exports = 
+
+  # Internet Range
+  
+  InternetCIDR:       '0.0.0.0/0'
+  
+  # Ports
+
+  Ports:
+    SSH: 22
+    MySQL: 3306
+```
+
+Anything in these files will be available in all environments. Individual environment files can however override these values by redeclaring them.
+
+### CloudFormation Topology
+
+Each `.coffee` file in the `cloudformation` directory and its subdirectories represents a part of the CloudFormation template. All files are loaded in an arbitary order, `CloudFormation(env, helpers)` is called on each module, and the results merged into the environment template, e.g `cloudformation/vpc/vpc.coffee`:
+
+```coffeescript
+module.exports =
+  Name: "VPC"
+  CloudFormation: (params) ->
+    Resources:
+
+      # The Environment VPC.
+      
+      TestVPC:
+        Type: 'AWS::EC2::VPC'
+        Properties:
+          CidrBlock:          params.VPCCIDR
+          EnableDnsSupport:   true
+          EnableDnsHostnames: true
+          InstanceTenancy:    'default'
+          Tags: [ { Key: 'Name', Value: 'Test VPC' } ]
+
+```
+
+ A `Name` property can also be defined on the module, which is used only for the logging output of the compiler.
+
+### Helpers
+Each `.coffee` file in the `helpers` directory and its subdirectories represents part of the helpers object supplied to each `CloudFormation(env, helpers)` call. Here you can define helper functions.
+
+Multiple helpers can be defined in each file.
 
 ## Hints and Tips
 
