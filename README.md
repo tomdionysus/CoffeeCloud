@@ -51,9 +51,8 @@ module.exports =
 
   AvailibilityZones:  [ 'ap-southeast-2a',  'ap-southeast-2b' ]
 
-  WebTierCIDR:        [ '10.0.1.0/24',  '10.0.2.0/24' ]
-  ServicesTierCIDR:   [ '10.0.10.0/24', '10.0.11.0/24' ]
-  DataTierCIDR:       [ '10.0.20.0/24', '10.0.21.0/24' ]
+  WebCIDR:        [ '10.0.1.0/24',  '10.0.2.0/24' ]
+  DataCIDR:       [ '10.0.20.0/24', '10.0.21.0/24' ]
 ```
 
 An environment module **must** declare the `Name` property in order to be processed.
