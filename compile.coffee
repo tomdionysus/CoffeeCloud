@@ -16,6 +16,13 @@ console.log("------------------")
 
 matcher = (fn) -> fn.match /\.coffee/
 
+helpers = {}
+
+walk(path.resolve(__dirname,'helpers'),matcher,(helperfilename) ->
+  helperlib = require(helperfilename)
+  helpers[k] = v for k,v in helperlib
+)
+
 walk(path.resolve(__dirname,'environments'),matcher,(envfilename) ->
 
   templatename = 'build/'+path.basename(envfilename).slice(0,-7)+".template"
@@ -29,7 +36,7 @@ walk(path.resolve(__dirname,'environments'),matcher,(envfilename) ->
     sourceFile = require(filename)
     if sourceFile.CloudFormation?
       console.log "- #{sourceFile.Name}"
-      template = deepmerge(template, sourceFile.CloudFormation(env))
+      template = deepmerge(template, sourceFile.CloudFormation(env, helpers))
   )
 
   fs.writeFile(path.resolve(__dirname,templatename), JSON.stringify(template, null, 2), (err) ->
